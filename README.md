@@ -36,6 +36,10 @@ Aplicação web local, gratuita e orientada por evidências para investigação 
 
 Requisito: Node.js 20 ou superior. O runtime do Codex já atende a esse requisito no ambiente de desenvolvimento.
 
+No Windows, dê duplo clique em `INICIAR_ANCESTRAL_RESEARCH_LAB.cmd`. Mantenha a janela aberta durante o uso; para parar, pressione `Ctrl+C` ou feche a janela.
+
+Alternativamente:
+
 ```powershell
 npm start
 ```
@@ -89,4 +93,3 @@ Para a integração FamilySearch foram usadas exclusivamente fontes oficiais do 
 ## Uso e custo
 
 Projeto pessoal, não comercial e de custo zero. O modo local não envia dados a serviços externos. Uma integração futura com Gemini será opcional, desativada por padrão e deverá usar configuração local nunca versionada.
-
