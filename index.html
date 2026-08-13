@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Painel local de investigação genealógica orientado por evidências.">
+  <meta name="color-scheme" content="light">
+  <title>Ancestral Research Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Ir para o conteúdo</a>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">AR</span>
+      <div>
+        <p class="eyebrow">Laboratório genealógico local</p>
+        <h1>Ancestral Research Lab</h1>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span id="mode-badge" class="status-pill status-local">Modo local</span>
+      <button class="button button-secondary" id="settings-button" type="button">Configurar</button>
+      <button class="button button-primary" id="export-button" type="button">Exportar pesquisa</button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <nav id="main-nav">
+        <button class="nav-item active" data-view="overview" type="button"><span>◫</span> Visão geral</button>
+        <button class="nav-item" data-view="person" type="button"><span>◎</span> Pessoa em foco</button>
+        <button class="nav-item" data-view="evidence" type="button"><span>▤</span> Fatos e fontes</button>
+        <button class="nav-item" data-view="analysis" type="button"><span>◇</span> Lacunas e conflitos</button>
+        <button class="nav-item" data-view="notes" type="button"><span>✎</span> Notas de pesquisa</button>
+        <button class="nav-item" data-view="records" type="button"><span>▧</span> DGS / imagens</button>
+      </nav>
+
+      <section class="sidebar-card">
+        <p class="eyebrow">Princípio de prova</p>
+        <p>Uma relação só é tratada como confirmada quando há fonte que a sustente. Divergências permanecem visíveis.</p>
+      </section>
+      <section class="sidebar-card compact">
+        <div class="mini-row"><span>Escrita FamilySearch</span><strong class="danger-text">Desativada</strong></div>
+        <div class="mini-row"><span>Dados locais</span><strong>Seu navegador</strong></div>
+      </section>
+    </aside>
+
+    <main id="main" class="main-content" tabindex="-1">
+      <section class="hero-panel">
+        <div>
+          <p class="eyebrow">Investigação atual</p>
+          <h2 id="workspace-title">Reconstrução documental da família Duarte</h2>
+          <p id="workspace-subtitle">Dados demonstrativos — substitua-os por sua própria pesquisa.</p>
+        </div>
+        <div class="person-search">
+          <label for="person-search-input">Localizar pessoa por nome ou ID</label>
+          <div class="search-row">
+            <input id="person-search-input" type="search" autocomplete="off" placeholder="Ex.: Helena ou MOCK-H001">
+            <button class="button button-dark" id="search-button" type="button">Localizar</button>
+          </div>
+          <div id="search-results" class="search-results" hidden></div>
+        </div>
+      </section>
+
+      <section id="view-overview" class="view active" aria-labelledby="overview-heading">
+        <div class="section-heading">
+          <div><p class="eyebrow">VISÃO RÁPIDA</p><h2 id="overview-heading">Estado da investigação</h2></div>
+          <p id="last-saved" class="muted">Salvo localmente</p>
+        </div>
+        <div id="metric-grid" class="metric-grid"></div>
+        <div class="dashboard-grid">
+          <article class="panel panel-wide">
+            <div class="panel-heading"><div><p class="eyebrow">Pessoa em foco</p><h3 id="focus-name"></h3></div><button class="text-button" data-go="person" type="button">Abrir ficha →</button></div>
+            <div id="focus-summary"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">Prioridade</p><h3>Próxima ação</h3></div></div>
+            <div id="next-action"></div>
+          </article>
+          <article class="panel panel-wide">
+            <div class="panel-heading"><div><p class="eyebrow">Rede familiar</p><h3>Conexões próximas</h3></div></div>
+            <div id="relationship-map" class="relationship-map"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">Alertas ativos</p><h3>Lacunas e divergências</h3></div><button class="text-button" data-go="analysis" type="button">Ver todos →</button></div>
+            <div id="alert-preview"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="view-person" class="view" aria-labelledby="person-heading">
+        <div class="section-heading"><div><p class="eyebrow">FICHA INDIVIDUAL</p><h2 id="person-heading">Pessoa em foco</h2></div></div>
+        <div id="person-detail"></div>
+      </section>
+
+      <section id="view-evidence" class="view" aria-labelledby="evidence-heading">
+        <div class="section-heading"><div><p class="eyebrow">MATRIZ DE EVIDÊNCIAS</p><h2 id="evidence-heading">Fatos comparados às fontes</h2></div></div>
+        <div class="panel table-panel"><div id="evidence-table"></div></div>
+      </section>
+
+      <section id="view-analysis" class="view" aria-labelledby="analysis-heading">
+        <div class="section-heading"><div><p class="eyebrow">ANÁLISE LOCAL</p><h2 id="analysis-heading">Lacunas, conflitos e próximos passos</h2></div></div>
+        <div id="analysis-list" class="analysis-list"></div>
+      </section>
+
+      <section id="view-notes" class="view" aria-labelledby="notes-heading">
+        <div class="section-heading"><div><p class="eyebrow">CADERNO DE PESQUISA</p><h2 id="notes-heading">Notas locais</h2></div><button id="new-note-button" class="button button-primary" type="button">Nova nota</button></div>
+        <form id="note-form" class="panel note-form" hidden>
+          <label>Título<input id="note-title" required maxlength="120"></label>
+          <label>Classificação<select id="note-classification"><option>hipótese</option><option>indício</option><option>relato</option><option>fato documentalmente comprovado</option><option>contradição</option><option>não confirmado</option></select></label>
+          <label class="full-width">Nota<textarea id="note-body" required rows="5" maxlength="5000"></textarea></label>
+          <div class="form-actions full-width"><button class="button button-secondary" id="cancel-note" type="button">Cancelar</button><button class="button button-primary" type="submit">Salvar localmente</button></div>
+        </form>
+        <div id="notes-list" class="notes-list"></div>
+      </section>
+
+      <section id="view-records" class="view" aria-labelledby="records-heading">
+        <div class="section-heading"><div><p class="eyebrow">MÓDULO SEPARADO</p><h2 id="records-heading">DGS e imagens históricas</h2></div></div>
+        <article class="panel records-placeholder">
+          <div class="placeholder-icon">▧</div>
+          <div><h3>Acompanhamento manual, sem automação privada</h3><p>Este módulo não enumera, baixa nem percorre imagens. Ele guarda apenas referências que você inserir manualmente enquanto aguardamos orientação do Records Access.</p></div>
+        </article>
+        <form id="record-form" class="panel inline-form">
+          <label>DGS ou referência<input id="record-id" required maxlength="80" placeholder="Ex.: DGS 000000000"></label>
+          <label>Descrição<input id="record-description" required maxlength="180" placeholder="Livro, localidade, período"></label>
+          <label>Status<select id="record-status"><option>pendente</option><option>em consulta manual</option><option>imagem localizada</option><option>bloqueado</option></select></label>
+          <button class="button button-primary" type="submit">Adicionar referência</button>
+        </form>
+        <div id="record-list" class="notes-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="settings-dialog">
+    <form method="dialog" id="settings-form">
+      <div class="dialog-heading"><div><p class="eyebrow">CONFIGURAÇÃO SEGURA</p><h2>FamilySearch</h2></div><button class="icon-button" value="cancel" aria-label="Fechar">×</button></div>
+      <div class="notice notice-info"><strong>Sem App Key?</strong> Continue em modo local. Nenhuma função investigativa local depende dela.</div>
+      <label>Ambiente<select id="fs-environment"><option value="integration">Integration / Sandbox</option><option value="beta">Beta</option><option value="production">Production</option></select></label>
+      <label>App Key<input id="fs-app-key" type="password" autocomplete="off" placeholder="Mantida apenas nesta sessão"></label>
+      <label>Callback OAuth<input id="fs-redirect-uri" type="url" value="http://localhost:4173/"></label>
+      <label class="check-row"><input id="enable-writes" type="checkbox" disabled><span><strong>Permitir escrita no FamilySearch</strong><small>Indisponível nesta versão. Futuras escritas exigirão revisão e confirmação explícita por operação.</small></span></label>
+      <div id="oauth-message" class="notice" hidden></div>
+      <div class="dialog-actions"><button class="button button-secondary" value="cancel">Cancelar</button><button id="save-settings" class="button button-primary" value="default">Salvar sessão</button><button id="familysearch-login" class="button button-dark" value="default">Entrar com FamilySearch</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="https://unpkg.com/fs-js-lite@3.0.0/dist/FamilySearch.min.js"></script>
+  <script type="module">
+    import("./config.local.js").catch(() => {}).finally(() => import("./src/app.js"));
+  </script>
+</body>
+</html>

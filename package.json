@@ -1,0 +1,15 @@
+{
+  "name": "ancestral-research-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first investigative genealogy workspace with optional FamilySearch integration.",
+  "scripts": {
+    "start": "node scripts/server.mjs",
+    "test": "node --test --test-isolation=none",
+    "check": "node --check src/app.js && node --check src/services/analysis.js && node --check src/services/familySearchClient.js && node --check src/services/storage.js && node --check src/ui/render.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
